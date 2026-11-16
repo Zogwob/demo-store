@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Demo Store — Sample Online Store (HTML Template)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#faf9f6; --surface:#ffffff; --surface-2:#f1efe9; --ink:#1c2420; --ink-2:#4c5a53;
+        --muted:#7c8a82; --line:#e3e0d6; --accent:#1e4d3a; --accent-ink:#ffffff;
+        --accent-soft:#e4efe8; --gold:#b07d2b; --sale:#b3402a; --radius:14px;
+        --shadow:0 18px 50px rgba(20,35,28,.16); --drawer-shadow:-18px 0 50px rgba(20,35,28,.18);
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#121614; --surface:#1b201d; --surface-2:#242a26; --ink:#eef2ee; --ink-2:#b9c4bc;
+          --muted:#8b988f; --line:#303832; --accent:#7fc7a5; --accent-ink:#0e241a;
+          --accent-soft:#22352b; --gold:#d8a95c; --sale:#e0785c;
+          --shadow:0 18px 50px rgba(0,0,0,.5); --drawer-shadow:-18px 0 50px rgba(0,0,0,.55);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;font-family:"Manrope",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+      img{display:block;max-width:100%}
+      button{font:inherit;cursor:pointer}
+      input,select,textarea{font:inherit;color:inherit}
+      a{color:inherit}
+      .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+      h1,h2,h3{font-family:"DM Serif Display",Georgia,serif;font-weight:400;line-height:1.12;margin:0}
+      .serif{font-family:"DM Serif Display",Georgia,serif}
+
+      /* Announcement */
+      .announce{background:var(--accent);color:var(--accent-ink);text-align:center;font-size:.82rem;font-weight:600;letter-spacing:.02em;padding:9px 16px}
+      .announce span{opacity:.75;font-weight:500}
+
+      /* Header */
+      header.site{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+      .header-in{display:flex;align-items:center;gap:18px;padding:14px 0}
+      .logo{font-family:"DM Serif Display",Georgia,serif;font-size:1.55rem;letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+      .logo em{font-style:normal;color:var(--gold)}
+      nav.main{display:flex;gap:22px;margin-left:8px}
+      nav.main a{text-decoration:none;font-weight:600;font-size:.93rem;color:var(--ink-2)}
+      nav.main a:hover{color:var(--ink)}
+      .header-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+      .searchbox{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;min-width:210px}
+      .searchbox svg{flex:none;color:var(--muted)}
+      .searchbox input{border:0;background:transparent;outline:none;width:100%;font-size:.9rem}
+      .icon-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:9px 16px;font-weight:700;font-size:.9rem}
+      .icon-btn:hover{filter:brightness(1.08)}
+      .cart-count{background:var(--gold);color:#fff;border-radius:999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;padding:0 5px}
+
+      /* Hero */
+      .hero{padding:44px 0 30px}
+      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+      .hero-tag{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:18px}
+      .hero h1{font-size:clamp(2.4rem,5.2vw,3.9rem);margin-bottom:16px}
+      .hero h1 em{font-style:italic;color:var(--accent)}
+      .hero p.lead{color:var(--ink-2);font-size:1.08rem;max-width:46ch;margin:0 0 26px}
+      .hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+      .btn{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:13px 24px;font-weight:700;font-size:.95rem;text-decoration:none;border:1px solid transparent;transition:transform .15s ease,filter .15s ease}
+      .btn:active{transform:scale(.98)}
+      .btn-primary{background:var(--accent);color:var(--accent-ink)}
+      .btn-primary:hover{filter:brightness(1.1)}
+      .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+      .btn-ghost:hover{border-color:var(--ink-2)}
+      .hero-stats{display:flex;gap:30px;margin-top:32px;flex-wrap:wrap}
+      .hero-stats div strong{display:block;font-size:1.25rem}
+      .hero-stats div span{color:var(--muted);font-size:.84rem;font-weight:600}
+      .hero-media{position:relative}
+      .hero-media img{width:100%;aspect-ratio:1/1.02;object-fit:cover;border-radius:22px}
+      .hero-card{position:absolute;left:-16px;bottom:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;display:flex;gap:12px;align-items:center;max-width:290px}
+      .hero-card img{width:52px;height:52px;border-radius:9px;object-fit:cover}
+      .hero-card b{font-size:.9rem;display:block;line-height:1.3}
+      .hero-card span{font-size:.82rem;color:var(--muted)}
+      .hero-card button{margin-left:4px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:8px 12px;font-weight:700;font-size:.82rem;white-space:nowrap}
+
+      /* Trust strip */
+      .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:26px}
+      .trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:20px 0}
+      .trust-item{display:flex;gap:12px;align-items:flex-start}
+      .trust-item svg{color:var(--accent);flex:none;margin-top:2px}
+      .trust-item b{display:block;font-size:.92rem}
+      .trust-item span{color:var(--muted);font-size:.83rem}
+
+      /* Sections */
+      section.block{padding:52px 0 8px}
+      .sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+      .sec-head h2{font-size:clamp(1.7rem,3.4vw,2.3rem)}
+      .sec-head p{color:var(--ink-2);margin:6px 0 0;max-width:52ch}
+
+      /* Category tiles */
+      .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+      .cat-tile{position:relative;border-radius:18px;overflow:hidden;border:0;padding:0;text-align:left;background:var(--surface-2)}
+      .cat-tile img{width:100%;height:230px;object-fit:cover;transition:transform .5s ease}
+      .cat-tile:hover img{transform:scale(1.05)}
+      .cat-tile .cap{position:absolute;inset:auto 0 0 0;padding:38px 18px 14px;background:linear-gradient(transparent,rgba(10,18,14,.72));color:#fff}
+      .cat-tile .cap b{font-size:1.12rem;display:block}
+      .cat-tile .cap span{font-size:.85rem;opacity:.85}
+
+      /* Shop toolbar */
+      .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+      .chips{display:flex;gap:8px;flex-wrap:wrap}
+      .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:8px 16px;font-weight:700;font-size:.87rem}
+      .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+      .toolbar select{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 14px;font-weight:600;font-size:.88rem}
+      .result-count{color:var(--muted);font-size:.86rem;font-weight:600;width:100%}
+
+      /* Product grid */
+      .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+      .card-media{position:relative;background:var(--surface-2);border:0;padding:0;width:100%}
+      .card-media img{width:100%;aspect-ratio:1/1;object-fit:cover}
+      .badge{position:absolute;top:12px;left:12px;background:var(--surface);color:var(--ink);font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+      .badge.sale{background:var(--sale);color:#fff}
+      .badge.new{background:var(--gold);color:#fff}
+      .quick{position:absolute;left:12px;right:12px;bottom:12px;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:10px;padding:9px;font-weight:700;font-size:.86rem;opacity:0;transform:translateY(6px);transition:.2s ease}
+      .card:hover .quick,.card-media:focus-visible .quick{opacity:1;transform:none}
+      .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+      .card-cat{font-size:.74rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--gold)}
+      .card-name{font-weight:700;font-size:1.02rem;line-height:1.3}
+      .stars{color:var(--gold);font-size:.85rem;letter-spacing:.08em}
+      .stars span{color:var(--muted);letter-spacing:0;font-weight:600;margin-left:5px}
+      .card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:8px}
+      .price{font-size:1.12rem;font-weight:800}
+      .price s{color:var(--muted);font-weight:600;font-size:.92rem;margin-right:7px}
+      .add-btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:10px 18px;font-weight:700;font-size:.88rem}
+      .add-btn:hover{filter:brightness(1.1)}
+      .empty{grid-column:1/-1;text-align:center;padding:52px 20px;color:var(--ink-2);background:var(--surface);border:1px dashed var(--line);border-radius:18px}
+
+      /* Promo */
+      .promo{margin:56px 0 8px;background:var(--accent);color:var(--accent-ink);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.1fr .9fr}
+      .promo-copy{padding:42px 40px}
+      .promo-copy h2{font-size:clamp(1.8rem,3.6vw,2.5rem);margin-bottom:12px}
+      .promo-copy p{opacity:.85;max-width:44ch;margin:0 0 22px}
+      .promo-copy .btn{background:#fff;color:#173d2d}
+      .promo img{width:100%;height:100%;min-height:280px;object-fit:cover}
+
+      /* Reviews */
+      .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+      .review{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+      .review .stars{font-size:1rem}
+      .review p{margin:10px 0 14px;color:var(--ink-2)}
+      .review b{font-size:.92rem}
+      .review span{display:block;color:var(--muted);font-size:.82rem;font-weight:600}
+
+      /* Newsletter */
+      .newsletter{margin:56px 0 64px;background:var(--surface-2);border-radius:22px;padding:42px;text-align:center}
+      .newsletter h2{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px}
+      .newsletter p{color:var(--ink-2);max-width:48ch;margin:0 auto 22px}
+      .news-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+      .news-form input{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:13px 20px;min-width:min(320px,80vw);outline:none}
+      .news-done{font-weight:700;color:var(--accent)}
+
+      /* Footer */
+      footer.site{border-top:1px solid var(--line);padding:44px 0 30px}
+      .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+      .foot-grid h4{margin:0 0 12px;font-size:.95rem}
+      .foot-grid a{display:block;color:var(--ink-2);text-decoration:none;font-size:.9rem;padding:3px 0}
+      .foot-grid a:hover{color:var(--ink)}
+      .foot-grid p{color:var(--muted);font-size:.9rem;max-width:34ch}
+      .pay-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+      .pay{border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-size:.74rem;font-weight:800;letter-spacing:.04em;color:var(--ink-2);background:var(--surface)}
+      .demo-disclaimer{margin:30px 0 0;padding:14px 16px;border:1px dashed var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink-2);font-size:.86rem}
+      .demo-disclaimer strong{color:var(--ink)}
+      .foot-base{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.84rem}
+
+      /* Drawer + modals */
+      .overlay{position:fixed;inset:0;background:rgba(12,18,15,.5);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:60}
+      .overlay.open{opacity:1;pointer-events:auto}
+      .drawer{position:fixed;top:0;right:0;height:100dvh;width:min(430px,100vw);background:var(--surface);z-index:70;transform:translateX(105%);transition:transform .3s ease;box-shadow:var(--drawer-shadow);display:none;flex-direction:column}
+      .drawer.open{display:flex}
+      .drawer.shown{transform:none}
+      .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+      .drawer-head h3{font-size:1.3rem}
+      .x-btn{background:var(--surface-2);border:1px solid var(--line);width:36px;height:36px;border-radius:50%;font-size:1rem;line-height:1}
+      .ship-bar{padding:14px 20px;border-bottom:1px solid var(--line);font-size:.86rem;color:var(--ink-2)}
+      .ship-track{height:8px;background:var(--surface-2);border-radius:99px;margin-top:8px;overflow:hidden}
+      .ship-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s ease}
+      .drawer-items{flex:1;overflow-y:auto;padding:8px 20px}
+      .line-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+      .line-item img{width:72px;height:72px;object-fit:cover;border-radius:10px;background:var(--surface-2)}
+      .line-item .li-info{flex:1;min-width:0}
+      .line-item b{font-size:.93rem;display:block;line-height:1.35}
+      .line-item .li-cat{color:var(--muted);font-size:.8rem;font-weight:600}
+      .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;margin-top:8px;overflow:hidden}
+      .qty button{width:30px;height:28px;border:0;background:transparent;font-weight:800}
+      .qty span{min-width:26px;text-align:center;font-weight:700;font-size:.88rem}
+      .li-right{text-align:right;display:flex;flex-direction:column;align-items:end;justify-content:space-between}
+      .li-price{font-weight:800}
+      .remove{background:none;border:0;color:var(--sale);font-size:.8rem;font-weight:700;padding:0}
+      .drawer-foot{border-top:1px solid var(--line);padding:18px 20px calc(18px + env(safe-area-inset-bottom))}
+      .drawer-foot .row{display:flex;justify-content:space-between;font-weight:700;margin-bottom:4px}
+      .drawer-foot .note{color:var(--muted);font-size:.82rem;margin:0 0 14px}
+      .wide-btn{width:100%;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:14px;font-weight:800;font-size:.98rem}
+      .wide-btn:disabled{opacity:.45;cursor:not-allowed}
+      .cart-empty{text-align:center;color:var(--ink-2);padding:48px 12px}
+
+      .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px}
+      .modal.open{display:flex}
+      .modal-box{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);width:100%;max-height:92dvh;overflow-y:auto;position:relative}
+      .modal-box.qv{max-width:820px}
+      .modal-box.co{max-width:560px;padding:28px}
+      .modal-box .x-btn{position:absolute;top:14px;right:14px;z-index:2}
+      .qv-grid{display:grid;grid-template-columns:1fr 1fr}
+      .qv-grid img{width:100%;height:100%;min-height:320px;object-fit:cover}
+      .qv-info{padding:28px}
+      .qv-info h3{font-size:1.7rem;margin:6px 0 8px}
+      .qv-info .desc{color:var(--ink-2);margin:12px 0 18px}
+      .qv-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+      .qv-meta span{background:var(--surface-2);border-radius:999px;padding:6px 12px;font-size:.8rem;font-weight:700;color:var(--ink-2)}
+      .qv-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+      .co h3{font-size:1.5rem;margin-bottom:6px}
+      .co .sub{color:var(--ink-2);font-size:.92rem;margin:0 0 20px}
+      .field{margin-bottom:14px}
+      .field label{display:block;font-weight:700;font-size:.85rem;margin-bottom:6px}
+      .field input,.field textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 13px;outline:none}
+      .field input:focus,.field textarea:focus{border-color:var(--accent)}
+      .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .pay-opt{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-weight:600;font-size:.92rem;cursor:pointer}
+      .pay-opt input{accent-color:var(--accent)}
+      .demo-note{font-size:.8rem;color:var(--muted);text-align:center;margin-top:12px}
+      .success{text-align:center;padding:16px 0 6px}
+      .success .tick{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px}
+      .success h3{font-size:1.6rem;margin-bottom:8px}
+      .success p{color:var(--ink-2);margin:0 0 6px}
+      .success .ord{font-weight:800;color:var(--ink)}
+
+      /* Info pages (footer Help / Company links) */
+      .modal-box.info{max-width:640px;padding:30px}
+      .info h3{font-size:1.55rem;margin-bottom:10px;padding-right:40px}
+      .info-body{color:var(--ink-2)}
+      .info-body p{margin:0 0 12px}
+      .info-body ul{margin:0 0 12px;padding-left:20px}
+      .info-body li{margin-bottom:6px}
+      .info-body strong{color:var(--ink)}
+      .info-note{margin:18px 0 0;padding:12px 14px;border:1px dashed var(--line);border-radius:10px;background:var(--surface-2);font-size:.82rem;color:var(--muted)}
+      .track-form{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+      .track-form input{flex:1;min-width:min(220px,70vw);border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:11px 18px;outline:none}
+      .track-form input:focus{border-color:var(--accent)}
+      .track-steps{list-style:none;margin:10px 0;padding:0}
+      .track-steps li{position:relative;padding:5px 0 5px 28px;color:var(--muted);font-weight:600}
+      .track-steps li::before{content:"";position:absolute;left:2px;top:11px;width:11px;height:11px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+      .track-steps li.done{color:var(--ink-2)}
+      .track-steps li.done::before{background:var(--accent);border-color:var(--accent)}
+      .track-steps li.current{color:var(--ink)}
+      .track-steps li.current::before{border-color:var(--accent);background:var(--accent-soft)}
+
+      .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,80px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:700;font-size:.9rem;z-index:90;transition:transform .3s ease;box-shadow:var(--shadow);max-width:92vw;text-align:center}
+      .toast.show{transform:translate(-50%,0)}
+
+      @media (max-width:960px){
+        nav.main{display:none}
+        .trust-in{grid-template-columns:repeat(2,1fr)}
+        .grid{grid-template-columns:repeat(2,1fr)}
+        .reviews{grid-template-columns:1fr}
+        .promo{grid-template-columns:1fr}
+        .promo img{min-height:220px;max-height:260px}
+        .foot-grid{grid-template-columns:1fr 1fr}
+        .qv-grid{grid-template-columns:1fr}
+        .qv-grid img{min-height:0;aspect-ratio:4/3}
+      }
+      @media (max-width:640px){
+        .hero{padding-top:26px}
+        .hero-grid{grid-template-columns:1fr;gap:26px}
+        .hero-card{left:10px;right:10px;max-width:none}
+        .searchbox{display:none}
+        .grid{grid-template-columns:1fr 1fr;gap:12px}
+        .card-body{padding:12px}
+        .card-name{font-size:.92rem}
+        .price{font-size:1rem}
+        .card-foot{flex-direction:column;align-items:stretch;gap:8px}
+        .add-btn{padding:9px 13px;font-size:.82rem;width:100%}
+        .quick{display:none}
+        .cat-grid{grid-template-columns:1fr}
+        .cat-tile img{height:170px}
+        .toolbar select{margin-left:0}
+        .newsletter{padding:30px 20px}
+        .field-row{grid-template-columns:1fr}
+      }
+      @media (prefers-reduced-motion: reduce){
+        *{transition:none !important;scroll-behavior:auto !important}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="announce">Free worldwide shipping on orders over $75 <span>· 30-day easy returns · Autumn Edit: up to 25% off</span></div>
+
+    <header class="site">
+      <div class="wrap header-in">
+        <a class="logo" href="#">Demo<em>Store</em></a>
+        <nav class="main" aria-label="Main">
+          <a href="#shop">Shop</a>
+          <a href="#categories">Categories</a>
+          <a href="#promo">Autumn Edit</a>
+          <a href="#reviews">Reviews</a>
+        </nav>
+        <div class="header-actions">
+          <label class="searchbox">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+            <input id="searchInput" type="search" placeholder="Search products…" aria-label="Search products" />
+          </label>
+          <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h15l-1.7 8.5a2 2 0 0 1-2 1.5H8.6a2 2 0 0 1-2-1.6L4.3 3.8A1 1 0 0 0 3.3 3H1.5"/><circle cx="9" cy="21" r="1.6"/><circle cx="17.5" cy="21" r="1.6"/></svg>
+            Cart <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <div class="wrap hero">
+        <div class="hero-grid">
+          <div>
+            <span class="hero-tag">New season · Autumn Edit live</span>
+            <h1>Beautiful objects for <em>everyday living</em></h1>
+            <p class="lead">Small-batch home goods, leather accessories and personal tech — designed in Copenhagen, made to be used daily and kept for years.</p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#shop">Shop the collection</a>
+              <a class="btn btn-ghost" href="#categories">Browse categories</a>
+            </div>
+            <div class="hero-stats">
+              <div><strong>12k+</strong><span>Happy customers</span></div>
+              <div><strong>4.8 / 5</strong><span>Average rating</span></div>
+              <div><strong>40+</strong><span>Countries shipped</span></div>
+            </div>
+          </div>
+          <div class="hero-media">
+            <img src="assets/vase.jpg" alt="Brown ceramic vase on a plain studio background" />
+            <div class="hero-card">
+              <img src="assets/vase.jpg" alt="" />
+              <div><b>Aura Ceramic Vase</b><span>$48 · ★ 4.9 (214 reviews)</span></div>
+              <button data-add="vase">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRUST -->
+      <div class="trust">
+        <div class="wrap trust-in">
+          <div class="trust-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="19" r="1.8"/><circle cx="17" cy="19" r="1.8"/></svg>
+            <div><b>Free shipping</b><span>Worldwide on orders over $75</span></div>
+          </div>
+          <div class="trust-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+            <div><b>30-day returns</b><span>No questions asked, prepaid label</span></div>
+          </div>
+          <div class="trust-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div><b>2-year warranty</b><span>On every product we sell</span></div>
+          </div>
+          <div class="trust-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+            <div><b>Secure checkout</b><span>Cards, PayPal &amp; Apple Pay</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <section class="block wrap" id="categories">
+        <div class="sec-head">
+          <div><h2>Shop by category</h2><p>Three small collections, edited tightly — nothing here we wouldn’t keep ourselves.</p></div>
+        </div>
+        <div class="cat-grid">
+          <button class="cat-tile" data-cat-link="home">
+            <img src="assets/lamp.jpg" alt="Black desk lamp on a desk" />
+            <span class="cap"><b>Home Living</b><span>Vases, lighting &amp; candles</span></span>
+          </button>
+          <button class="cat-tile" data-cat-link="accessories">
+            <img src="assets/tote.jpg" alt="Woman carrying a brown leather tote bag" />
+            <span class="cap"><b>Accessories</b><span>Leather goods, watches &amp; eyewear</span></span>
+          </button>
+          <button class="cat-tile" data-cat-link="beauty">
+            <img src="assets/serum.jpg" alt="Glass dropper serum bottle with a plain label" />
+            <span class="cap"><b>Beauty &amp; Care</b><span>Botanical skincare essentials</span></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SHOP -->
+      <section class="block wrap" id="shop">
+        <div class="sec-head">
+          <div><h2>The collection</h2><p>Filter by category, search, or sort — tap a product for details, colours and sizing.</p></div>
+        </div>
+        <div class="toolbar">
+          <div class="chips" role="group" aria-label="Filter by category">
+            <button class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button class="chip" data-filter="home" aria-pressed="false">Home</button>
+            <button class="chip" data-filter="tech" aria-pressed="false">Tech</button>
+            <button class="chip" data-filter="accessories" aria-pressed="false">Accessories</button>
+            <button class="chip" data-filter="beauty" aria-pressed="false">Beauty</button>
+          </div>
+          <select id="sortSelect" aria-label="Sort products">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to high</option>
+            <option value="price-desc">Price: High to low</option>
+            <option value="rating">Top rated</option>
+          </select>
+          <span class="result-count" id="resultCount"></span>
+        </div>
+        <div class="grid" id="productGrid"></div>
+      </section>
+
+      <!-- PROMO -->
+      <div class="wrap">
+        <div class="promo" id="promo">
+          <div class="promo-copy">
+            <h2>The Autumn Edit — up to 25% off</h2>
+            <p>Warm layers for your home and wardrobe. Discounted prices are already applied across the collection — no code needed, while stock lasts.</p>
+            <a class="btn" href="#shop">Shop the edit</a>
+          </div>
+          <img src="assets/candle.jpg" alt="Lit white soy candle in a plain glass jar with no label" />
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <section class="block wrap" id="reviews">
+        <div class="sec-head"><div><h2>What customers say</h2></div></div>
+        <div class="reviews">
+          <article class="review">
+            <div class="stars">★★★★★</div>
+            <p>“The vase is even better in person — heavy, matte, and the colour shifts beautifully in afternoon light. Shipping to Berlin took four days.”</p>
+            <b>Amelia R.</b><span>Verified buyer · Aura Ceramic Vase</span>
+          </article>
+          <article class="review">
+            <div class="stars">★★★★★</div>
+            <p>“I’ve worn the tote daily for three months. The leather is developing a gorgeous patina and it swallows a 14-inch laptop with room to spare.”</p>
+            <b>Jonas K.</b><span>Verified buyer · Saddle Leather Tote</span>
+          </article>
+          <article class="review">
+            <div class="stars">★★★★☆</div>
+            <p>“Halo headphones pair instantly and the battery genuinely lasts the week. Sound is warm, not bass-heavy — exactly what I wanted for work.”</p>
+            <b>Priya S.</b><span>Verified buyer · Halo Wireless Headphones</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- NEWSLETTER -->
+      <div class="wrap">
+        <div class="newsletter">
+          <h2>Get 10% off your first order</h2>
+          <p>Join the list for early access to small-batch drops and a welcome code. One email a week, no noise.</p>
+          <p style="font-size:.84rem;color:var(--muted);max-width:56ch;margin:-10px auto 20px">Demo form: in this sample template, subscribing is only a simulation — no email is sent and no address is stored. To use this on a real store, the template buyer connects their own email service (for example Mailchimp or a similar provider) to this form.</p>
+          <form class="news-form" id="newsForm">
+            <input type="email" required placeholder="you@example.com" aria-label="Email address" id="newsEmail" />
+            <button class="btn btn-primary" type="submit">Subscribe</button>
+          </form>
+          <p class="news-done" id="newsDone" hidden>Demo simulation — thanks for trying it! No email was sent and your address was not saved. For reference only, the sample welcome code is <strong>DEMO10</strong>, shown here on this page — it is not on its way to your inbox.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site">
+      <div class="wrap">
+        <div class="foot-grid">
+          <div>
+            <a class="logo" href="#">Demo<em>Store</em></a>
+            <p>Everyday objects designed in Copenhagen and shipped worldwide from our Rotterdam warehouse.</p>
+            <div class="pay-row"><span class="pay">VISA</span><span class="pay">MASTERCARD</span><span class="pay">AMEX</span><span class="pay">PAYPAL</span><span class="pay">APPLE&nbsp;PAY</span></div>
+          </div>
+          <div><h4>Shop</h4><a href="#shop" data-cat-link="all">All products</a><a href="#shop" data-cat-link="home">Home Living</a><a href="#shop" data-cat-link="accessories">Accessories</a><a href="#shop" data-cat-link="beauty">Beauty &amp; Care</a><a href="#promo">Autumn Edit</a></div>
+          <div><h4>Help</h4><a href="#" data-info="shipping">Shipping &amp; delivery</a><a href="#" data-info="returns">Returns &amp; exchanges</a><a href="#" data-info="warranty">Warranty</a><a href="#" data-info="track">Track your order</a><a href="#" data-info="contact">Contact us</a></div>
+          <div><h4>Company</h4><a href="#" data-info="story">Our story</a><a href="#" data-info="materials">Materials &amp; care</a><a href="#" data-info="sustainability">Sustainability</a><a href="#" data-info="wholesale">Wholesale</a><a href="#" data-info="careers">Careers</a></div>
+        </div>
+        <p class="demo-disclaimer"><strong>Demo content notice:</strong> “Demo Store” is a placeholder name. The store name, products, testimonials and photos on this page are sample content only — please replace them with your own before using this template for a real store. The product images are real licensed photos from Pexels (free for commercial use under the Pexels License), credited in the package's IMAGE-CREDITS.txt, included so the catalogue looks complete out of the box — even so, you must replace them with photos of your own real products before using this template for a real store. The newsletter subscribe form is also a demo only: it does not send any email and does not store any address. Before using this template for a real store, you must connect your own email service (for example Mailchimp or a similar provider) to the form so subscriptions and welcome emails are handled through your own account. Order tracking is a demo too: the Track your order form only shows a sample status, never the status of a real order. Before using this template for a real store, connect it to your own order-tracking system (your order database, store platform or courier service) so your customers can look up a real order status by entering their order number. Checkout is a simulation as well: it processes no payment, places no real order and sends no confirmation email — before using this template for a real store, connect your own payment gateway, order system and email service.</p>
+        <div class="foot-base"><span>© 2026 Demo Store — Sample storefront built as a single HTML file.</span><span>USD · Ships worldwide</span></div>
+      </div>
+    </footer>
+
+    <!-- CART DRAWER -->
+    <div class="overlay" id="overlay"></div>
+    <aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
+      <div class="drawer-head"><h3>Your cart</h3><button class="x-btn" id="closeCart" aria-label="Close cart">✕</button></div>
+      <div class="ship-bar" id="shipBar"></div>
+      <div class="drawer-items" id="cartItems"></div>
+      <div class="drawer-foot">
+        <div class="row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <p class="note">Shipping &amp; taxes calculated at checkout.</p>
+        <button class="wide-btn" id="checkoutBtn">Checkout</button>
+      </div>
+    </aside>
+
+    <!-- QUICK VIEW MODAL -->
+    <div class="modal" id="qvModal" role="dialog" aria-modal="true" aria-label="Product details">
+      <div class="modal-box qv">
+        <button class="x-btn" data-close-qv aria-label="Close details">✕</button>
+        <div class="qv-grid">
+          <img id="qvImg" src="assets/vase.jpg" alt="Product photo" />
+          <div class="qv-info">
+            <span class="card-cat" id="qvCat"></span>
+            <h3 id="qvName"></h3>
+            <div class="stars" id="qvStars"></div>
+            <p class="desc" id="qvDesc"></p>
+            <div class="qv-meta" id="qvMeta"></div>
+            <div class="qv-actions">
+              <span class="price" id="qvPrice" style="font-size:1.35rem"></span>
+              <span class="qty"><button id="qvMinus" aria-label="Decrease quantity">−</button><span id="qvQty">1</span><button id="qvPlus" aria-label="Increase quantity">+</button></span>
+              <button class="add-btn" id="qvAdd" style="padding:12px 22px">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal" id="coModal" role="dialog" aria-modal="true" aria-label="Checkout">
+      <div class="modal-box co">
+        <button class="x-btn" data-close-co aria-label="Close checkout">✕</button>
+        <div id="coFormWrap">
+          <h3>Checkout</h3>
+          <p class="sub" id="coSummary"></p>
+          <form id="coForm">
+            <div class="field-row">
+              <div class="field"><label for="coName">Full name</label><input id="coName" required autocomplete="name" placeholder="Alex Morgan" /></div>
+              <div class="field"><label for="coEmail">Email</label><input id="coEmail" type="email" required autocomplete="email" placeholder="alex@example.com" /></div>
+            </div>
+            <div class="field"><label for="coAddr">Street address</label><input id="coAddr" required autocomplete="street-address" placeholder="221B Baker Street" /></div>
+            <div class="field-row">
+              <div class="field"><label for="coCity">City</label><input id="coCity" required autocomplete="address-level2" placeholder="London" /></div>
+              <div class="field"><label for="coZip">Postal code</label><input id="coZip" required autocomplete="postal-code" placeholder="NW1 6XE" /></div>
+            </div>
+            <div class="field"><label>Payment method</label>
+              <label class="pay-opt"><input type="radio" name="pay" checked /> Card — Visa / Mastercard / Amex</label>
+              <label class="pay-opt"><input type="radio" name="pay" /> PayPal</label>
+              <label class="pay-opt"><input type="radio" name="pay" /> Apple Pay</label>
+            </div>
+            <button class="wide-btn" type="submit" id="payBtn">Pay now</button>
+            <p class="demo-note">Demo checkout for this sample template — no real payment is processed.</p>
+          </form>
+        </div>
+        <div id="coSuccess" class="success" hidden>
+          <span class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 12.5 5 5 10-11"/></svg></span>
+          <h3>Order confirmed</h3>
+          <p>Thank you — your order <span class="ord" id="ordNum"></span> is being prepared.</p>
+          <p>Estimated delivery for a real order would be 3–5 business days.</p>
+          <p class="demo-note">Demo checkout: this is a simulation — no payment was processed, no real order was placed, and no confirmation email was sent. The order number above (starting with DS-) is a sample only. To sell from a real store, the template buyer must connect their own payment gateway, order system and email service.</p>
+          <button class="btn btn-primary" data-close-co style="margin-top:14px">Continue shopping</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO MODAL (footer Help / Company pages) -->
+    <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-label="Information">
+      <div class="modal-box info">
+        <button class="x-btn" data-close-info aria-label="Close">✕</button>
+        <h3 id="infoTitle"></h3>
+        <div class="info-body" id="infoBody"></div>
+        <p class="info-note">Demo content: this text is sample copy included with the template — replace it with your own store’s real policies and details before going live.</p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+      var PRODUCTS = [
+        { id:"vase", name:"Aura Ceramic Vase", cat:"home", catLabel:"Home Living", price:48, old:64, rating:4.9, reviews:214, badge:"Bestseller", badgeClass:"", img:"assets/vase.jpg", alt:"Brown ceramic vase on a plain studio background", desc:"Hand-thrown stoneware vase with a warm terracotta glaze and a sculptural teardrop silhouette. Watertight, felt-padded base, and sized for tall stems or as a standalone object.", meta:["Stoneware · matte glaze","H 32 cm · Ø 14 cm","Wipe clean"] },
+        { id:"headphones", name:"Halo Wireless Headphones", cat:"tech", catLabel:"Tech", price:189, old:249, rating:4.8, reviews:532, badge:"Save 24%", badgeClass:"sale", img:"assets/headphones.jpg", alt:"Black over-ear wireless headphones on a white background", desc:"Over-ear headphones with adaptive noise cancelling, memory-foam cushions and a 60-hour battery. Folds flat, pairs with two devices at once, and charges over USB-C.", meta:["ANC · Bluetooth 5.3","60-hour battery","USB-C fast charge"] },
+        { id:"candle", name:"Library Soy Candle", cat:"home", catLabel:"Home Living", price:32, old:null, rating:4.7, reviews:189, badge:"New", badgeClass:"new", img:"assets/candle.jpg", alt:"Lit white soy candle in a plain glass jar with no label", desc:"100% soy wax candle poured into a reusable glass vessel. Cedar, amber and old-paper notes with a clean, even burn of roughly 45 hours.", meta:["100% soy wax","±45-hour burn","Cotton wick"] },
+        { id:"tote", name:"Saddle Leather Tote", cat:"accessories", catLabel:"Accessories", price:145, old:180, rating:4.9, reviews:321, badge:"Bestseller", badgeClass:"", img:"assets/tote.jpg", alt:"Woman carrying a brown leather tote bag", desc:"Full-grain vegetable-tanned leather tote that fits a 14-inch laptop, with an interior zip pocket and magnetic closure. Ages beautifully — the patina is the point.", meta:["Full-grain leather","Fits 14-inch laptop","Interior zip pocket"] },
+        { id:"watch", name:"Meridian Minimal Watch", cat:"accessories", catLabel:"Accessories", price:129, old:null, rating:4.8, reviews:428, badge:"", badgeClass:"", img:"assets/watch.jpg", alt:"Minimal watch with white dial, close-up", desc:"A 38 mm brushed-steel case, sapphire-coated glass and a Japanese quartz movement, on a quick-release leather strap. 5 ATM water resistance for everyday wear.", meta:["38 mm steel case","Sapphire-coated glass","5 ATM"] },
+        { id:"sunglasses", name:"Riviera Sunglasses", cat:"accessories", catLabel:"Accessories", price:79, old:99, rating:4.6, reviews:156, badge:"Save 20%", badgeClass:"sale", img:"assets/sunglasses.jpg", alt:"Black sunglasses lying flat on a light surface", desc:"Hand-polished acetate clubmaster frames with nylon polarised lenses and full UV400 protection. Includes a linen case and microfibre cloth.", meta:["Polarised lenses","UV400 protection","Case included"] },
+        { id:"backpack", name:"Voyager Canvas Backpack", cat:"accessories", catLabel:"Accessories", price:98, old:null, rating:4.8, reviews:267, badge:"New", badgeClass:"new", img:"assets/backpack.jpg", alt:"Brown canvas backpack outdoors", desc:"Waxed-canvas daypack with a padded 15-inch laptop sleeve, magnetic buckle closure and a water-repellent finish. 18-litre capacity, carry-on friendly.", meta:["Waxed canvas · 18 L","15-inch laptop sleeve","Water-repellent"] },
+        { id:"lamp", name:"Lumen Desk Lamp", cat:"home", catLabel:"Home Living", price:64, old:85, rating:4.7, reviews:203, badge:"Save 25%", badgeClass:"sale", img:"assets/lamp.jpg", alt:"Black desk lamp on a desk", desc:"Powder-coated steel desk lamp with a tilting shade, warm 2700K LED and a three-step touch dimmer. Heavy round base keeps it planted on busy desks.", meta:["2700K warm LED","3-step touch dimmer","Tilting shade"] },
+        { id:"serum", name:"Glow Botanical Serum", cat:"beauty", catLabel:"Beauty & Care", price:42, old:null, rating:4.9, reviews:611, badge:"Bestseller", badgeClass:"", img:"assets/serum.jpg", alt:"Glass dropper serum bottle with a plain label", desc:"A lightweight facial oil-serum with squalane, rosehip and vitamin E. Two to three drops morning and night; fragrance-free and suitable for all skin types. 30 ml.", meta:["30 ml glass bottle","Fragrance-free","Vegan & cruelty-free"] }
+      ];
+      var FREE_SHIP = 75;
+      var state = { filter:"all", query:"", sort:"featured" };
+      var cart = {}; // id -> qty
+      var qvId = null, qvQty = 1;
+
+      function money(n){ return "$" + n.toFixed(2); }
+      function byId(id){ return document.getElementById(id); }
+      function product(id){ for (var i=0;i<PRODUCTS.length;i++) if (PRODUCTS[i].id===id) return PRODUCTS[i]; return null; }
+      function starStr(r){ var full = Math.round(r); var s=""; for (var i=0;i<5;i++) s += i<full ? "★" : "☆"; return s; }
+
+      function visibleProducts(){
+        var list = PRODUCTS.filter(function(p){
+          var okCat = state.filter==="all" || p.cat===state.filter;
+          var okQ = !state.query || (p.name+" "+p.catLabel).toLowerCase().indexOf(state.query)!==-1;
+          return okCat && okQ;
+        });
+        if (state.sort==="price-asc") list.sort(function(a,b){return a.price-b.price;});
+        if (state.sort==="price-desc") list.sort(function(a,b){return b.price-a.price;});
+        if (state.sort==="rating") list.sort(function(a,b){return b.rating-a.rating;});
+        return list;
+      }
+
+      function renderGrid(){
+        var grid = byId("productGrid");
+        var list = visibleProducts();
+        byId("resultCount").textContent = "Showing " + list.length + " of " + PRODUCTS.length + " products";
+        if (!list.length){
+          grid.innerHTML = '<div class="empty"><strong>No products match your search.</strong><br>Try a different keyword or category.</div>';
+          return;
+        }
+        grid.innerHTML = list.map(function(p){
+          var badge = p.badge ? '<span class="badge ' + p.badgeClass + '">' + p.badge + "</span>" : "";
+          var old = p.old ? "<s>" + money(p.old) + "</s>" : "";
+          return '<article class="card">' +
+            '<button class="card-media" data-qv="' + p.id + '" aria-label="View ' + p.name + '">' +
+              '<img src="' + p.img + '" alt="' + p.alt + '" />' + badge +
+              '<span class="quick">Quick view</span></button>' +
+            '<div class="card-body">' +
+              '<span class="card-cat">' + p.catLabel + "</span>" +
+              '<span class="card-name">' + p.name + "</span>" +
+              '<span class="stars">' + starStr(p.rating) + "<span>" + p.rating.toFixed(1) + " (" + p.reviews + ")</span></span>" +
+              '<div class="card-foot"><span class="price">' + old + money(p.price) + "</span>" +
+              '<button class="add-btn" data-add="' + p.id + '">Add to cart</button></div>' +
+            "</div></article>";
+        }).join("");
+      }
+
+      function cartCount(){ var n=0; for (var k in cart) n += cart[k]; return n; }
+      function cartTotal(){ var t=0; for (var k in cart) t += product(k).price * cart[k]; return t; }
+
+      function addToCart(id, qty){
+        cart[id] = (cart[id]||0) + (qty||1);
+        renderCart();
+        showToast(product(id).name + " added to cart");
+      }
+
+      function renderCart(){
+        byId("cartCount").textContent = cartCount();
+        var box = byId("cartItems");
+        var total = cartTotal();
+        var keys = Object.keys(cart);
+        if (!keys.length){
+          box.innerHTML = '<div class="cart-empty"><strong>Your cart is empty.</strong><br>Add something you love from the collection.</div>';
+        } else {
+          box.innerHTML = keys.map(function(id){
+            var p = product(id);
+            return '<div class="line-item"><img src="' + p.img + '" alt="" />' +
+              '<div class="li-info"><b>' + p.name + '</b><span class="li-cat">' + p.catLabel + " · " + money(p.price) + '</span>' +
+              '<span class="qty"><button data-dec="' + id + '" aria-label="Decrease">−</button><span>' + cart[id] + '</span><button data-inc="' + id + '" aria-label="Increase">+</button></span></div>' +
+              '<div class="li-right"><span class="li-price">' + money(p.price*cart[id]) + '</span>' +
+              '<button class="remove" data-remove="' + id + '">Remove</button></div></div>';
+          }).join("");
+        }
+        byId("cartSubtotal").textContent = money(total);
+        byId("checkoutBtn").disabled = !keys.length;
+        var bar = byId("shipBar");
+        if (total >= FREE_SHIP){
+          bar.innerHTML = "You’ve unlocked <strong>free worldwide shipping</strong>." + '<div class="ship-track"><div class="ship-fill" style="width:100%"></div></div>';
+        } else {
+          var pct = Math.min(100, Math.round(total / FREE_SHIP * 100));
+          bar.innerHTML = "Add <strong>" + money(FREE_SHIP - total) + "</strong> more for free worldwide shipping." + '<div class="ship-track"><div class="ship-fill" style="width:' + pct + '%"></div></div>';
+        }
+      }
+
+      var toastTimer = null;
+      function showToast(msg){
+        var t = byId("toast"); t.textContent = msg; t.classList.add("show");
+        clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2400);
+      }
+
+      var cartCloseTimer = null;
+      function openCart(){
+        clearTimeout(cartCloseTimer);
+        var d = byId("cartDrawer");
+        d.classList.add("open");
+        void d.offsetWidth; /* flush styles so the slide-in transition runs */
+        d.classList.add("shown");
+        byId("overlay").classList.add("open");
+      }
+      function closeCart(){
+        var d = byId("cartDrawer");
+        d.classList.remove("shown");
+        byId("overlay").classList.remove("open");
+        clearTimeout(cartCloseTimer);
+        cartCloseTimer = setTimeout(function(){ d.classList.remove("open"); }, 320);
+      }
+
+      function updateQVPrice(){
+        var p = product(qvId); if (!p) return;
+        var total = p.price * qvQty;
+        var oldTotal = p.old ? p.old * qvQty : null;
+        byId("qvPrice").innerHTML = (oldTotal ? "<s>" + money(oldTotal) + "</s>" : "") + money(total);
+      }
+      function setQVQty(n){
+        qvQty = Math.max(1, n);
+        byId("qvQty").textContent = qvQty;
+        updateQVPrice();
+      }
+      function openQV(id){
+        var p = product(id); if (!p) return;
+        qvId = id; qvQty = 1; byId("qvQty").textContent = "1";
+        byId("qvImg").src = p.img; byId("qvImg").alt = p.alt;
+        byId("qvCat").textContent = p.catLabel;
+        byId("qvName").textContent = p.name;
+        byId("qvStars").innerHTML = starStr(p.rating) + "<span>" + p.rating.toFixed(1) + " · " + p.reviews + " reviews</span>";
+        byId("qvDesc").textContent = p.desc;
+        byId("qvMeta").innerHTML = p.meta.map(function(m){ return "<span>" + m + "</span>"; }).join("");
+        updateQVPrice();
+        byId("qvModal").classList.add("open");
+      }
+      function closeQV(){ byId("qvModal").classList.remove("open"); }
+
+      function openCheckout(){
+        if (!cartCount()) return;
+        closeCart();
+        byId("coFormWrap").hidden = false; byId("coSuccess").hidden = true;
+        byId("coSummary").textContent = cartCount() + " item(s) · Subtotal " + money(cartTotal()) +
+          (cartTotal() >= FREE_SHIP ? " · Free shipping applied." : " · Shipping calculated after address (free over $75).");
+        byId("payBtn").textContent = "Pay " + money(cartTotal());
+        byId("coModal").classList.add("open");
+      }
+      function closeCheckout(){ byId("coModal").classList.remove("open"); }
+
+      var INFO = {
+        shipping:{ title:"Shipping & delivery", body:
+          "<p>Orders are packed and dispatched from our Rotterdam warehouse within <strong>1–2 business days</strong>. You’ll receive a tracking link by email as soon as your parcel leaves us.</p>" +
+          "<ul><li><strong>Standard delivery:</strong> 3–5 business days — $6.95, or <strong>free on orders over $75</strong>.</li>" +
+          "<li><strong>Express delivery:</strong> 1–2 business days — $14.95.</li>" +
+          "<li><strong>Worldwide:</strong> we ship to 40+ countries; any duties and taxes for non-EU orders are shown at checkout.</li></ul>" +
+          "<p>Delivery times are estimates and can stretch during peak periods such as the Autumn Edit sale.</p>" },
+        returns:{ title:"Returns & exchanges", body:
+          "<p>Changed your mind? You have <strong>30 days</strong> from delivery to return any unused item in its original condition — no questions asked.</p>" +
+          "<ul><li>Start a return from the link in your shipping email; a <strong>prepaid return label</strong> is included for EU and US orders.</li>" +
+          "<li>Refunds land on your original payment method within <strong>5 business days</strong> of us receiving the parcel.</li>" +
+          "<li>Want a different colour or size? Mark it as an exchange and we’ll ship the replacement free of charge.</li></ul>" +
+          "<p>For hygiene reasons, opened skincare (such as the Glow Botanical Serum) can only be returned if faulty.</p>" },
+        warranty:{ title:"Warranty", body:
+          "<p>Every product we sell is covered by a <strong>2-year warranty</strong> against defects in materials and workmanship, starting on the delivery date.</p>" +
+          "<ul><li>Covers manufacturing faults, stitching and hardware failures, and electronics defects.</li>" +
+          "<li>Doesn’t cover accidental damage, loss, or normal wear — leather patina and an even candle burn are features, not faults.</li>" +
+          "<li>To claim, contact us with your order number and a photo of the issue; we’ll repair, replace, or refund.</li></ul>" },
+        track:{ title:"Track your order", body:
+          "<p>Enter the order number from your confirmation email (it looks like <strong>DS-123456</strong>) to see where your parcel is.</p>" +
+          '<form class="track-form" id="trackForm"><input id="trackInput" required placeholder="DS-123456" aria-label="Order number" /><button class="btn btn-primary" type="submit">Track</button></form>' +
+          '<div id="trackResult"></div>' +
+          "<p style=\"margin-top:14px;font-size:.85rem\"><strong>Demo note:</strong> this tracking form is a simulation only — whatever order number you enter, the status shown is a fixed sample, not the status of a real order. Before using this template on a live store, the store owner (template buyer) must connect this form to their own order-tracking system — their order database, store platform, or courier service. Once connected, end customers simply type in their order number to see its real status.</p>" },
+        contact:{ title:"Contact us", body:
+          "<p>Questions about an order, a product, or anything else? We reply within <strong>one business day</strong>.</p>" +
+          "<ul><li><strong>Email:</strong> hello@demostore.example</li>" +
+          "<li><strong>Hours:</strong> Monday–Friday, 9:00–17:00 CET</li>" +
+          "<li><strong>Studio:</strong> Demo Store, Sample Street 1, Copenhagen (visits by appointment)</li></ul>" +
+          "<p>For order questions, include your order number so we can help you faster.</p>" },
+        story:{ title:"Our story", body:
+          "<p>Demo Store started in a Copenhagen workshop with a simple frustration: everyday objects that look good in photos but fall apart within a year.</p>" +
+          "<p>We work with small makers across Europe — ceramicists, tanneries, and a two-person candle studio — to produce small batches of things designed to be used daily and kept for years, not seasons.</p>" +
+          "<p>Everything is photographed, tested, and packed by our own team before it earns a place in the collection.</p>" },
+        materials:{ title:"Materials & care", body:
+          "<p>We publish what everything is made of — and how to look after it — because cared-for objects last.</p>" +
+          "<ul><li><strong>Stoneware (vases):</strong> wipe with a damp cloth; avoid sudden temperature changes.</li>" +
+          "<li><strong>Full-grain leather (bags, straps):</strong> condition every few months and keep away from prolonged direct sunlight.</li>" +
+          "<li><strong>Soy candles:</strong> trim the wick to 5&nbsp;mm before each burn, and let the wax melt to the edge on the first burn.</li>" +
+          "<li><strong>Skincare:</strong> store the serum away from direct light and use within 12 months of opening.</li></ul>" },
+        sustainability:{ title:"Sustainability", body:
+          "<p>We’d rather sell fewer, better things. Concretely, that means:</p>" +
+          "<ul><li>Small-batch production to avoid dead stock — when something sells out, it may simply not come back.</li>" +
+          "<li>Plastic-free, paper-based packaging that is curbside recyclable.</li>" +
+          "<li>A repair-first warranty: if we can fix it, we fix it instead of replacing it.</li>" +
+          "<li>Sea and road freight for restocks wherever lead times allow.</li></ul>" },
+        wholesale:{ title:"Wholesale", body:
+          "<p>Stock Demo Store products in your shop, hotel, or studio. We supply a curated wholesale range with a minimum first order of <strong>$500</strong>.</p>" +
+          "<ul><li>Trade pricing at 45–55% of retail, depending on volume.</li>" +
+          "<li>Net-30 payment terms for established accounts.</li>" +
+          "<li>Point-of-sale materials and product photography included.</li></ul>" +
+          "<p>Write to <strong>wholesale@demostore.example</strong> with your store details and we’ll send the current line sheet.</p>" },
+        careers:{ title:"Careers", body:
+          "<p>We’re a small team in Copenhagen and Rotterdam, and we hire slowly and deliberately. Current sample openings:</p>" +
+          "<ul><li><strong>Customer care specialist</strong> — Rotterdam, full-time.</li>" +
+          "<li><strong>Ceramics production assistant</strong> — Copenhagen studio, part-time.</li>" +
+          "<li><strong>Fulfilment lead</strong> — Rotterdam warehouse, full-time.</li></ul>" +
+          "<p>Don’t see your role? Write to <strong>jobs@demostore.example</strong> — we read every application.</p>" }
+      };
+      function openInfo(key){
+        var info = INFO[key]; if (!info) return;
+        byId("infoTitle").textContent = info.title;
+        byId("infoBody").innerHTML = info.body;
+        byId("infoModal").classList.add("open");
+      }
+      function closeInfo(){ byId("infoModal").classList.remove("open"); }
+
+      document.addEventListener("click", function(e){
+        var add = e.target.closest("[data-add]");
+        if (add){ addToCart(add.getAttribute("data-add"), 1); return; }
+        var qv = e.target.closest("[data-qv]");
+        if (qv){ openQV(qv.getAttribute("data-qv")); return; }
+        var catLink = e.target.closest("[data-cat-link]");
+        if (catLink){
+          /* Footer Shop links are anchors (href="#shop"): stop the browser's own
+             anchor jump so the filter below is what drives the navigation. */
+          e.preventDefault();
+          setFilter(catLink.getAttribute("data-cat-link"));
+          document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+          return;
+        }
+        var inc = e.target.closest("[data-inc]"); if (inc){ cart[inc.getAttribute("data-inc")]++; renderCart(); return; }
+        var dec = e.target.closest("[data-dec]");
+        if (dec){ var id = dec.getAttribute("data-dec"); cart[id]--; if (cart[id]<=0) delete cart[id]; renderCart(); return; }
+        var rem = e.target.closest("[data-remove]"); if (rem){ delete cart[rem.getAttribute("data-remove")]; renderCart(); return; }
+        if (e.target.closest("[data-close-qv]")) closeQV();
+        if (e.target.closest("[data-close-co]")) closeCheckout();
+        var infoLink = e.target.closest("[data-info]");
+        if (infoLink){ e.preventDefault(); openInfo(infoLink.getAttribute("data-info")); return; }
+        if (e.target.closest("[data-close-info]")) closeInfo();
+      });
+
+      function setFilter(f){
+        state.filter = f;
+        var chips = document.querySelectorAll("[data-filter]");
+        for (var i=0;i<chips.length;i++) chips[i].setAttribute("aria-pressed", chips[i].getAttribute("data-filter")===f ? "true" : "false");
+        renderGrid();
+      }
+      var chipEls = document.querySelectorAll("[data-filter]");
+      for (var i=0;i<chipEls.length;i++){
+        chipEls[i].addEventListener("click", function(){ setFilter(this.getAttribute("data-filter")); });
+      }
+      byId("sortSelect").addEventListener("change", function(){ state.sort = this.value; renderGrid(); });
+      byId("searchInput").addEventListener("input", function(){
+        state.query = this.value.trim().toLowerCase();
+        renderGrid();
+        if (state.query) document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+      });
+
+      byId("cartBtn").addEventListener("click", openCart);
+      byId("closeCart").addEventListener("click", closeCart);
+      byId("overlay").addEventListener("click", closeCart);
+      byId("checkoutBtn").addEventListener("click", openCheckout);
+      byId("qvMinus").addEventListener("click", function(){ setQVQty(qvQty - 1); });
+      byId("qvPlus").addEventListener("click", function(){ setQVQty(qvQty + 1); });
+      byId("qvAdd").addEventListener("click", function(){ if (qvId){ addToCart(qvId, qvQty); closeQV(); openCart(); } });
+      byId("qvModal").addEventListener("click", function(e){ if (e.target===this) closeQV(); });
+      byId("coModal").addEventListener("click", function(e){ if (e.target===this) closeCheckout(); });
+      byId("infoModal").addEventListener("click", function(e){ if (e.target===this) closeInfo(); });
+      document.addEventListener("keydown", function(e){ if (e.key==="Escape"){ closeCart(); closeQV(); closeCheckout(); closeInfo(); } });
+
+      document.addEventListener("submit", function(e){
+        if (e.target.id !== "trackForm") return;
+        e.preventDefault();
+        var num = byId("trackInput").value.trim().toUpperCase() || "DS-000000";
+        byId("trackResult").innerHTML =
+          '<p style="margin-top:10px"><strong>Order ' + num + '</strong></p>' +
+          '<ul class="track-steps"><li class="done">Order confirmed</li><li class="done">Packed — Rotterdam warehouse</li><li class="current">Shipped — in transit to you</li><li>Out for delivery</li><li>Delivered</li></ul>' +
+          '<p style="font-size:.85rem">Demo simulation: this is a sample status, not the real status of this order number — this form always shows the same in-transit example. Before going live, the store owner (template buyer) must connect this form to their own order-tracking system (order database, store platform, or courier service); customers will then see the real status for the order number they enter.</p>';
+      });
+
+      byId("coForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        var num = "DS-" + Math.floor(100000 + Math.random()*900000);
+        byId("ordNum").textContent = num;
+        byId("coFormWrap").hidden = true; byId("coSuccess").hidden = false;
+        cart = {}; renderCart();
+      });
+
+      byId("newsForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        byId("newsForm").hidden = true; byId("newsDone").hidden = false;
+      });
+
+      renderGrid();
+      renderCart();
+    </script>
+  </body>
+</html>
