@@ -1,0 +1,33 @@
+IMAGE CREDITS — Demo Store template (Pexels version, DRAFT)
+============================================================
+
+All nine product images in this folder are real photographs from Pexels,
+free for commercial use under the Pexels License
+(https://www.pexels.com/license/). Attribution is not required by the
+license, but the photographers are credited below and the photo pages
+are listed so the license for each image can be checked.
+
+They are sample product photos, included so the catalogue looks complete
+out of the box. Before using this template for a real store, replace them
+with photos of your own real products.
+
+- vase.jpg — "Aura Ceramic Vase"
+  Photo by Cindy Bartillon — https://www.pexels.com/photo/15246345/
+- headphones.jpg — "Halo Wireless Headphones"
+  Photo by Andrey Matveev — https://www.pexels.com/photo/33034333/
+- candle.jpg — "Library Soy Candle"
+  Photo by KATRIN BOLOVTSOVA — https://www.pexels.com/photo/6311832/
+- tote.jpg — "Saddle Leather Tote"
+  Photo by Gül Işık — https://www.pexels.com/photo/26316181/
+- watch.jpg — "Meridian Minimal Watch"
+  Photo by Erik Mclean — https://www.pexels.com/photo/30838490/
+- sunglasses.jpg — "Riviera Sunglasses"
+  Photo by ALOK DAS — https://www.pexels.com/photo/31259697/
+- backpack.jpg — "Voyager Canvas Backpack"
+  Photo by Hiago Italo — https://www.pexels.com/photo/2422476/
+- lamp.jpg — "Lumen Desk Lamp"
+  Photo by Eneida Nieves — https://www.pexels.com/photo/1112598/
+- serum.jpg — "Glow Botanical Serum"
+  Photo by Polina — https://www.pexels.com/photo/8101534/
+
+Note: no AI-generated product photos are used in this version.
